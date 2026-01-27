@@ -3,77 +3,108 @@
    Author: Trifon Stanchev
    ========================= */
 
-/* Smooth scrolling for navigation links */
-document.querySelectorAll("nav a").forEach(link => {
-  link.addEventListener("click", event => {
-    event.preventDefault();
-
+// ===== Safe Smooth Scrolling (anchors only) =====
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (e) => {
     const targetId = link.getAttribute("href");
-    const targetSection = document.querySelector(targetId);
+    if (!targetId || targetId === "#") return;
 
-    targetSection.scrollIntoView({
-      behavior: "smooth"
-    });
+    const target = document.querySelector(targetId);
+    if (!target) return;
+
+    e.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 });
 
-/* Highlight active section in navigation */
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll("nav a");
+// ===== Theme Toggle (Light/Dark) =====
+const themeToggleBtn = document.getElementById("themeToggle");
+const themeIcon = document.getElementById("themeIcon");
 
-window.addEventListener("scroll", () => {
-  let currentSection = "";
+function setTheme(mode) {
+  const isDark = mode === "dark";
+  document.body.classList.toggle("dark", isDark);
+  if (themeIcon) themeIcon.textContent = isDark ? "☀️" : "🌙";
+  localStorage.setItem("theme", mode);
+}
 
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.clientHeight;
+(function initTheme() {
+  const saved = localStorage.getItem("theme");
+  if (saved === "dark" || saved === "light") {
+    setTheme(saved);
+    return;
+  }
+  const prefersDark =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    if (pageYOffset >= sectionTop - sectionHeight / 3) {
-      currentSection = section.getAttribute("id");
-    }
-  });
+  setTheme(prefersDark ? "dark" : "light");
+})();
 
-  navLinks.forEach(link => {
-    link.classList.remove("active");
-    if (link.getAttribute("href") === `#${currentSection}`) {
-      link.classList.add("active");
-    }
-  });
+themeToggleBtn?.addEventListener("click", () => {
+  const isDarkNow = document.body.classList.contains("dark");
+  setTheme(isDarkNow ? "light" : "dark");
 });
 
-/* Scroll reveal animation */
-const revealElements = document.querySelectorAll("section, .project");
+// ===== Projects Search + Filter =====
+const searchInput = document.getElementById("projectSearch");
+const chipsContainer = document.getElementById("filterChips");
+const projectCards = Array.from(document.querySelectorAll(".project-card"));
+const noResults = document.getElementById("noResults");
 
-const revealOnScroll = () => {
-  const windowHeight = window.innerHeight;
+let activeFilter = "all";
 
-  revealElements.forEach(el => {
-    const elementTop = el.getBoundingClientRect().top;
+function normalize(str) {
+  return (str || "").toLowerCase().trim();
+}
 
-    if (elementTop < windowHeight - 100) {
-      el.classList.add("reveal");
-    }
+function matchesFilter(card, filter) {
+  if (filter === "all") return true;
+  const tags = normalize(card.getAttribute("data-tags"));
+  return tags.split(/\s+/).includes(filter);
+}
+
+function matchesSearch(card, query) {
+  if (!query) return true;
+  const text = normalize(card.innerText);
+  return text.includes(query);
+}
+
+function applyProjectsView({ scrollToFirstMatch = false } = {}) {
+  const q = normalize(searchInput?.value);
+  const visibleCards = [];
+
+  projectCards.forEach((card) => {
+    const ok = matchesFilter(card, activeFilter) && matchesSearch(card, q);
+    card.style.display = ok ? "block" : "none";
+    if (ok) visibleCards.push(card);
   });
-};
 
-window.addEventListener("scroll", revealOnScroll);
-window.addEventListener("load", revealOnScroll);
+  if (noResults) {
+    noResults.style.display = visibleCards.length === 0 ? "block" : "none";
+  }
 
-/* Optional Dark Mode (toggle manually if you add a button) */
-const toggleDarkMode = () => {
-  document.body.classList.toggle("dark-mode");
-};
+  if (scrollToFirstMatch && visibleCards.length > 0) {
+    visibleCards[0].scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
 
-/*
-To enable dark mode:
-1. Add a button in HTML:
-   <button onclick="toggleDarkMode()">🌙</button>
+searchInput?.addEventListener("input", () => applyProjectsView());
 
-2. Add dark styles in CSS:
-   body.dark-mode {
-     background-color: #0a192f;
-     color: #ccd6f6;
-   }
-*/
+chipsContainer?.addEventListener("click", (e) => {
+  const btn = e.target.closest(".chip");
+  if (!btn) return;
+
+  // Update active chip UI
+  chipsContainer.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+  btn.classList.add("active");
+
+  // Set filter
+  activeFilter = btn.dataset.filter || "all";
+  applyProjectsView({ scrollToFirstMatch: activeFilter !== "all" });
+});
+
+// Initial render (in case there is pre-filled search/filter)
+applyProjectsView();
 
 console.log("🚀 Portfolio script loaded successfully");

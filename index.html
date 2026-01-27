@@ -7,70 +7,253 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <a class="brand" href="#top">Trifon Stanchev</a>
+    </div>
 
-  <header>
-    <h1>Trifon Stanchev</h1>
-    <p>Software Developer | Tech Enthusiast</p>
+    <nav class="topbar-nav">
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" title="Toggle theme">
+        <span id="themeIcon" aria-hidden="true">🌙</span>
+      </button>
+    </nav>
   </header>
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
-  </nav>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-card">
+      <div class="hero-left">
+        <img
+          class="avatar"
+          src="assets/img/profile.jpg"
+          alt="Profile photo of Trifon Stanchev"
+        />
+      </div>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>
-      I am a passionate software developer focused on building clean,
-      efficient, and scalable applications.
-    </p>
+      <div class="hero-center">
+        <h1 class="hero-title">
+          Fachinformatiker für Anwendungsentwicklung (IHK) |
+          Software Developer <span class="muted">(in training)</span>
+        </h1>
+
+        <p class="hero-subtitle muted">
+          Currently learning and building with Java, Python, Databases (SQL), HTML/CSS/JavaScript, and Git.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="#projects">See projects</a>
+          <a class="btn" href="mailto:trifon.stanchev@protonmail.com">Email me</a>
+          <a class="btn" href="https://github.com/trifonstanchevtech" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <!-- Optional -->
+          <a class="btn" href="https://www.linkedin.com/in/trifon-stanchev/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="projects">
-    <h2>Projects</h2>
-
-    <div class="project">
-      <h3>Project One</h3>
-      <p>Description of your project.</p>
-      <a href="https://github.com/trifonstanchevtech/project-name" target="_blank">
-        View on GitHub
-      </a>
+  <!-- Featured Projects -->
+  <section id="projects" class="section">
+    <div class="section-header">
+      <h2>Featured Projects</h2>
+      <p class="muted">Search and filter by technology.</p>
     </div>
 
-    <div class="project">
-      <h3>Project Two</h3>
-      <p>Description of your project.</p>
-      <a href="#">Live Demo</a>
+    <div class="projects-toolbar">
+      <input
+        id="projectSearch"
+        class="search"
+        type="search"
+        placeholder="Search projects (title, description, tags)..."
+        autocomplete="off"
+      />
+
+      <div class="chips" id="filterChips" role="tablist" aria-label="Project filters">
+        <button class="chip active" data-filter="all" type="button">All</button>
+        <button class="chip" data-filter="java" type="button">Java</button>
+        <button class="chip" data-filter="python" type="button">Python</button>
+        <button class="chip" data-filter="sql" type="button">SQL</button>
+        <button class="chip" data-filter="web" type="button">Web</button>
+        <button class="chip" data-filter="git" type="button">Git</button>
+      </div>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+      <!-- Project card example -->
+      <article class="project-card" data-tags="java sql git" id="p-java-1">
+        <div class="project-top">
+          <h3>Java Project One</h3>
+          <div class="tag-row">
+            <span class="tag">Java</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Git</span>
+          </div>
+        </div>
+        <p class="muted">
+          Short description: what it does, why it matters, and what you learned.
+        </p>
+        <div class="card-actions">
+          <a class="btn small" href="projects/project-one.html">Case study</a>
+          <a class="btn small" href="https://github.com/trifonstanchevtech/REPO" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a class="btn small" href="#" target="_blank" rel="noopener noreferrer">Live demo</a>
+
+        </div>
+      </article>
+
+      <article class="project-card" data-tags="python git" id="p-python-1">
+        <div class="project-top">
+          <h3>Python Project One</h3>
+          <div class="tag-row">
+            <span class="tag">Python</span>
+            <span class="tag">Git</span>
+          </div>
+        </div>
+        <p class="muted">
+          Short description: what it does, why it matters, and what you learned.
+        </p>
+        <div class="card-actions">
+          <a class="btn small" href="projects/project-one.html">Case study</a>
+          <a class="btn small" href="https://github.com/trifonstanchevtech/REPO" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </article>
+
+      <p id="noResults" class="muted" style="display:none; margin-top: 1rem;">
+        No projects match your search/filter.
+      </p>
+    </div>
+
+    <div style="margin-top: 1.25rem;">
+      <a class="muted" href="projects/index.html">See all projects →</a>
     </div>
   </section>
 
-  <section id="skills">
-    <h2>Skills</h2>
-    <ul>
-      <li>JavaScript</li>
-      <li>HTML & CSS</li>
-      <li>Git & GitHub</li>
-      <li>React (if applicable)</li>
-    </ul>
-  </section>
+  <!-- Skills (bottom badges, not buttons) -->
+  <section id="skills" class="section">
+    <div class="section-header">
+      <h2>Skills</h2>
+      <p class="muted">Core technologies I work with and continue learning.</p>
+    </div>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: your.email@example.com</p>
-    <p>
-      GitHub:
-      <a href="https://github.com/trifonstanchevtech" target="_blank">
-        github.com/trifonstanchevtech
-      </a>
+    <div class="badges">
+      <span class="badge">Java</span>
+      <span class="badge">Python</span>
+      <span class="badge">SQL</span>
+      <span class="badge">HTML</span>
+      <span class="badge">CSS</span>
+      <span class="badge">JavaScript</span>
+      <span class="badge">PHP</span>
+      <span class="badge">Git</span>
+    </div>
+
+    <p class="muted" style="margin-top: 1rem;">
+  Tools: IntelliJ IDEA • Eclipse • PyCharm • Visual Studio Code
     </p>
+    <p class="muted" style="margin-top: 0.4rem;">
+      Also: JSON • REST basics
+    </p>
+
   </section>
 
-  <footer>
-    <p>© 2026 Trifon Stanchev</p>
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="section-header">
+      <h2>About Me</h2>
+    </div>
+
+    <div class="prose">
+      <p>
+        I am a software developer in training, currently completing a retraining program as a
+        <strong>Fachinformatiker für Anwendungsentwicklung (IHK)</strong> (IT Specialist for Application Development)
+        at GFN GmbH in Mannheim. My focus is on building practical, industry-relevant programming skills and applying
+        them through hands-on projects.
+      </p>
+
+      <p>
+        During the theoretical phase of my training, I have worked with Python and Java, as well as web technologies
+        such as HTML, CSS, and SQL. I have gained experience in developing user interfaces, implementing application
+        functionality, working with databases, and understanding core IT concepts including networking, system integration,
+        and basic project management.
+      </p>
+
+      <p>
+        I am currently preparing for my upcoming mandatory internship phase and actively seeking an opportunity in an
+        IHK-certified company where I can contribute, learn, and further develop my skills. This portfolio was created to
+        showcase my work and support my application for a suitable internship in software development.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <div class="section-header">
+      <h2>Contact</h2>
+      <p class="muted">For internship opportunities, collaboration, or questions — feel free to reach out.</p>
+    </div>
+
+  <div class="hero-actions">
+    <a class="btn primary" href="mailto:trifon.stanchev@protonmail.com">
+      <!-- Mail icon -->
+      <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+        <path d="m22 6-10 7L2 6"></path>
+      </svg>
+      Email
+    </a>
+
+    <a class="btn" href="https://github.com/trifonstanchevtech"
+      target="_blank" rel="noopener noreferrer">
+      <!-- GitHub icon -->
+      <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87
+                a3.37 3.37 0 0 0-.94-2.61
+                c3.14-.35 6.44-1.54 6.44-7
+                A5.44 5.44 0 0 0 20 4.77
+                A5.07 5.07 0 0 0 19.91 1
+                S18.73.65 16 2.48
+                a13.38 13.38 0 0 0-7 0
+                C6.27.65 5.09 1 5.09 1
+                A5.07 5.07 0 0 0 5 4.77
+                a5.44 5.44 0 0 0-1.5 3.78
+                c0 5.42 3.3 6.61 6.44 7
+                A3.37 3.37 0 0 0 9 18.13V22"></path>
+      </svg>
+      GitHub
+    </a>
+
+    <a class="btn" href="https://www.linkedin.com/in/trifon-stanchev/"
+      target="_blank" rel="noopener noreferrer">
+      <!-- LinkedIn icon -->
+      <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7
+                a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7
+                a6 6 0 0 1 6-6z"></path>
+        <rect x="2" y="9" width="4" height="12"></rect>
+        <circle cx="4" cy="4" r="2"></circle>
+      </svg>
+      LinkedIn
+    </a>
+  </div>
+  </section>
+
+  <footer class="footer">
+    <p class="muted">© 2026 Trifon Stanchev</p>
   </footer>
 
   <script src="script.js"></script>
 </body>
+
 </html>
