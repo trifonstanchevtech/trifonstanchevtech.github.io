@@ -1,6 +1,10 @@
 # Personal Portfolio Website
 
-**Pages License:** MIT  
+# Web Portfolio
+
+![GitHub Pages](https://github.com/trifonstanchevtech/trifonstanchevtech.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 **Live:** https://trifonstanchevtech.github.io
 
 This repository contains my personal portfolio website.
