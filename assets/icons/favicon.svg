@@ -6,18 +6,27 @@
     </linearGradient>
   </defs>
 
-  <!-- Circle background -->
-  <circle cx="32" cy="32" r="28" fill="url(#g)"/>
-  <!-- Subtle ring -->
-  <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+  <!-- Background circle (edge-to-edge) -->
+  <circle cx="32" cy="32" r="32" fill="url(#g)"/>
 
-  <!-- Initials -->
-  <text x="32" y="34"
-        text-anchor="middle"
-        dominant-baseline="middle"
-        font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace"
-        font-size="22"
-        font-weight="700"
-        letter-spacing="1"
-        fill="#E5E7EB">TS</text>
+  <!-- Very thin ring to preserve space -->
+  <circle cx="32" cy="32" r="31"
+          fill="none"
+          stroke="rgba(255,255,255,0.18)"
+          stroke-width="1.4"/>
+
+  <!-- Scaled initials to occupy more space -->
+  <g transform="translate(32 36) scale(1.08 1.12)">
+    <text x="0" y="0"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace"
+          font-size="30"
+          font-weight="900"
+          letter-spacing="-1"
+          fill="#E5E7EB">
+      TS
+    </text>
+  </g>
 </svg>
+
