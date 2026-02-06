@@ -318,6 +318,8 @@ body.dark .btn.primary {
 .projects-grid {
   display: grid;
   gap: 1rem;
+  max-width: 680px;
+  margin: 0 auto;
 }
 
 .project-card {
